@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorpresa Dani :)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        .button-container, .message-box-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            position: relative;
+        }
+        .button {
+            padding: 10px 20px;
+            background-color: #e9691e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            position: fixed;
+            z-index: 1;
+            border: 2px solid transparent;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #d81b60;
+        }
+        .message-box-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .message-box {
+            border: 2px solid #e91e63;
+            padding: 20px;
+            max-width: 500px;
+            background-color: #f8c754;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+            position: relative;
+            z-index: 1;
+            border-radius: 5px;
+        }
+        .message-box h1 {
+            text-align: center;
+            color: #e91e63;
+        }
+        .message-box p {
+            text-align: justify;
+            line-height: 1.5;
+            color: #333;
+        }
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* Ajustes para pantallas móviles */
+        @media (max-width: 768px) {
+            .button {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+            .message-box {
+                padding: 15px;
+                max-width: 90%;
+            }
+            .message-box h1 {
+                font-size: 20px;
+            }
+            .message-box p {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .button {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            .message-box {
+                padding: 10px;
+                max-width: 95%;
+            }
+            .message-box h1 {
+                font-size: 18px;
+            }
+            .message-box p {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <button class="button" onclick="moveButton()">Sorpresa :)</button>
+    </div>
+    <div class="message-box-container">
+        <div class="message-box" id="messageBox">
+            <h1>Para mi cielito:</h1>
+            <p>Cada momento a tu lado es un tesoro, cada sonrisa tuya es un regalo, y cada día contigo es una bendición.</p>
+            <p>Me encantas de manera infinita con toda la intensidad de mi corazón.</p>
+            <p>Siempre tuyo,<br>Tu esclavo :)</p>
+        </div>
+    </div>
+
+    <div id="particles-js"></div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        var button = document.querySelector('.button');
+        var messageBox = document.getElementById('messageBox');
+        var clickCount = 0;
+        var mensajes = ["clickea mi vida", "sigue clickeando bb", "no te rindas mi Dani"];
+        var audios = [
+            { src: "cancion1.mp3", startTime: 10 },
+            { src: "cancion2.mp3", startTime: 80 },
+            { src: "cancion3.mp3", startTime: 30 }
+        ];
+        var currentAudio = null;
+
+        function moveButton() {
+            clickCount++;
+            if (clickCount <= mensajes.length) {
+                if (currentAudio !== null && !currentAudio.paused) {
+                    currentAudio.pause();
+                }
+                var audioInfo = audios[clickCount - 1];
+                currentAudio = new Audio(audioInfo.src);
+                currentAudio.currentTime = audioInfo.startTime;
+                currentAudio.play();
+                button.innerHTML = mensajes[clickCount - 1];
+
+                // Obtener el tamaño de la ventana y el botón
+                var buttonWidth = button.offsetWidth;
+                var buttonHeight = button.offsetHeight;
+                var windowWidth = window.innerWidth;
+                var windowHeight = window.innerHeight;
+
+                // Limitar las coordenadas para que el botón no se salga de la pantalla
+                var randomX = Math.floor(Math.random() * (windowWidth - buttonWidth));
+                var randomY = Math.floor(Math.random() * (windowHeight - buttonHeight));
+
+                // Aplicar las nuevas posiciones
+                button.style.left = randomX + 'px';
+                button.style.top = randomY + 'px';
+            }
+            if (clickCount === mensajes.length + 1) {
+                button.style.display = 'none';
+                messageBox.style.display = 'block';  // Mostrar el mensaje final
+            }
+        }
+    </script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "shape": {
+                    "type": "image",
+                    "image": {
+                        "src": "https://emojicdn.elk.sh/❤️",
+                        "width": 100,
+                        "height": 100
+                    }
+                },
+                "size": {
+                    "value": 30,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 10,
+                        "sync": false
+                    }
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "bounce",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": false,
+                        "mode": "repulse"
+                    },
+                    "onclick": {
+                        "enable": false,
+                        "mode": "push"
+                    },
+                    "resize": true
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>
